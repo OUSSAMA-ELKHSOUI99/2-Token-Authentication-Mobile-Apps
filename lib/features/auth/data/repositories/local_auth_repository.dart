@@ -7,6 +7,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:sqflite/sqflite.dart'; // Or Isar, if you prefer
 
+// when ready to connect to a real backend, 
+//you simply swap out the LocalAuthRepository for a NetworkAuthRepository 
+//that hits real API endpoints
 class LocalAuthRepository implements IAuthRepository{
 
   final Database localDb;
