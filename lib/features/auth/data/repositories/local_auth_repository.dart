@@ -6,6 +6,7 @@ import 'package:authentication/features/auth/domain/repositories/i_auth_reposito
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:sqflite/sqflite.dart'; // Or Isar, if you prefer
+import 'package:uuid/uuid.dart';
 
 // when ready to connect to a real backend, 
 //you simply swap out the LocalAuthRepository for a NetworkAuthRepository 
@@ -117,6 +118,35 @@ class LocalAuthRepository implements IAuthRepository{
     return tokens;
   }
 
+  @override
+  Future<TokenPair> registerWithEmail(String email, String password, String name) async {
+  // 1. Check if the email is already taken
+  final existingUsers = await localDb.query(
+    'users',
+    where: 'email = ?',
+    whereArgs: [email],
+  );
+
+  if (existingUsers.isNotEmpty) {
+    throw Exception('Email already in use'); // This will be caught by the form controller
+  }
+
+  // 2. Hash the password and generate a new ID
+  final hashedPassword = _hashPassword(password);
+  final newUserId = const Uuid().v4(); 
+
+  // 3. Save the new user to the local SQLite database
+  await localDb.insert('users', {
+    'id': newUserId,
+    'email': email,
+    'name': name,
+    'password_hash': hashedPassword,
+  });
+
+  // 4. Automatically log them in by generating the tokens
+  // Since we already built loginWithEmail, we can just call it here!
+  return await loginWithEmail(email, password);
+  }
 
   @override
   Future<TokenPair> refreshSession(String oldRefreshToken) async {
