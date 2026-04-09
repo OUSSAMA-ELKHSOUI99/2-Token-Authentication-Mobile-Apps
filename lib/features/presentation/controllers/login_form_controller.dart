@@ -10,6 +10,10 @@ class LoginFormController extends Notifier<LoginFormState> {
   void updateEmail(String value) => state = state.copyWith(email: value, clearError: true);
   void updatePassword(String value) => state = state.copyWith(password: value, clearError: true);
 
+  void togglePasswordVisibility() {
+    state = state.copyWith(isPasswordVisible: !state.isPasswordVisible);
+  }
+  
   Future<void> submit() async {
     if (state.email.isEmpty || state.password.isEmpty) {
       state = state.copyWith(error: 'Please fill in all fields');

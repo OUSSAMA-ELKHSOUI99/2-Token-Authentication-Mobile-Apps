@@ -45,9 +45,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Indie Starter App',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        scaffoldBackgroundColor: const Color(0xFFFAF4FF),
       ),
       // 4. Point the app to the AuthWrapper to handle routing based on session state
       home: const AuthWrapper(), 
