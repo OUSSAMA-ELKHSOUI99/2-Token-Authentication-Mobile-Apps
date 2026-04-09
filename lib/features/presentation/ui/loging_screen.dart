@@ -273,9 +273,9 @@ class LoginScreen extends ConsumerWidget {
                           color: Colors.transparent,
                           child: InkWell(
                             borderRadius: BorderRadius.circular(12),
-                            onTap: () {
-                              formState.isSubmitting ? null : formController.submit;
-                            },
+                            onTap: 
+                              formState.isSubmitting ? null : formController.submit
+                            ,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -356,9 +356,9 @@ class LoginScreen extends ConsumerWidget {
                         children: [
                           Text("Don't have an account? ", style: TextStyle(color: onSurfaceVariant, fontSize: 14)),
                           GestureDetector(
-                            onTap: () {
-                              formState.isSubmitting ? null : onToggle;
-                            },
+                            onTap: 
+                              formState.isSubmitting ? null : onToggle
+                            ,
                             child: Text(
                               "Sign Up",
                               style: TextStyle(color: primary, fontSize: 14, fontWeight: FontWeight.bold),
