@@ -56,36 +56,36 @@ class RegistrationScreen extends ConsumerWidget {
       // ),
       backgroundColor: background,
       extendBodyBehindAppBar: true, // Allows the body to flow under the transparent app bar
-      appBar: AppBar(
-        backgroundColor: background.withOpacity(0.7),
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        // Glassmorphism effect for the AppBar
-        flexibleSpace: ClipRect(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-            child: Container(color: Colors.transparent),
-          ),
-        ),
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: IconButton(
-            icon: Icon(Icons.arrow_back, color: primary),
-            onPressed: () => Navigator.of(context).pop(),
-            splashRadius: 24,
-          ),
-        ),
-        title: Text(
-          "Aether",
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w900,
-            color: primary,
-            letterSpacing: -0.5,
-          ),
-        ),
-        centerTitle: true,
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: background.withOpacity(0.7),
+      //   elevation: 0,
+      //   scrolledUnderElevation: 0,
+      //   // Glassmorphism effect for the AppBar
+      //   flexibleSpace: ClipRect(
+      //     child: BackdropFilter(
+      //       filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+      //       child: Container(color: Colors.transparent),
+      //     ),
+      //   ),
+      //   leading: Padding(
+      //     padding: const EdgeInsets.only(left: 8.0),
+      //     child: IconButton(
+      //       icon: Icon(Icons.arrow_back, color: primary),
+      //       onPressed: () => Navigator.of(context).pop(),
+      //       splashRadius: 24,
+      //     ),
+      //   ),
+      //   title: Text(
+      //     "Aether",
+      //     style: TextStyle(
+      //       fontSize: 24,
+      //       fontWeight: FontWeight.w900,
+      //       color: primary,
+      //       letterSpacing: -0.5,
+      //     ),
+      //   ),
+      //   centerTitle: true,
+      // ),
       body: Stack(
         children: [
           // Background Decorative Elements (Asymmetric)
@@ -134,15 +134,15 @@ class RegistrationScreen extends ConsumerWidget {
                       // Hero Section
                       Column(
                         children: [
-                          Container(
-                            padding: const EdgeInsets.all(12),
-                            margin: const EdgeInsets.only(bottom: 24),
-                            decoration: BoxDecoration(
-                              color: surfaceContainerHigh,
-                              borderRadius: BorderRadius.circular(24),
-                            ),
-                            child: Icon(Icons.auto_awesome, color: primary, size: 32),
-                          ),
+                          // Container(
+                          //   padding: const EdgeInsets.all(12),
+                          //   margin: const EdgeInsets.only(bottom: 24),
+                          //   decoration: BoxDecoration(
+                          //     color: surfaceContainerHigh,
+                          //     borderRadius: BorderRadius.circular(24),
+                          //   ),
+                          //   child: Icon(Icons.auto_awesome, color: primary, size: 32),
+                          // ),
                           Text(
                             "Create Account",
                             style: TextStyle(

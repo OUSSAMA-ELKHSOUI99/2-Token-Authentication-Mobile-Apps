@@ -108,41 +108,41 @@ class LoginScreen extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       // Header / Logo
-                      Column(
-                        children: [
-                          Container(
-                            width: 56,
-                            height: 56,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [primary, primaryContainer],
-                                begin: Alignment.topRight,
-                                end: Alignment.bottomLeft,
-                              ),
-                              borderRadius: BorderRadius.circular(16),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: primary.withOpacity(0.3),
-                                  blurRadius: 15,
-                                  offset: const Offset(0, 8),
-                                ),
-                              ],
-                            ),
-                            child: const Icon(Icons.auto_awesome, color: Colors.white, size: 32),
-                          ),
-                          const SizedBox(height: 12),
-                          Text(
-                            "Aether",
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w900,
-                              color: primary,
-                              letterSpacing: -0.5,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 48),
+                      // Column(
+                      //   children: [
+                      //     Container(
+                      //       width: 56,
+                      //       height: 56,
+                      //       decoration: BoxDecoration(
+                      //         gradient: LinearGradient(
+                      //           colors: [primary, primaryContainer],
+                      //           begin: Alignment.topRight,
+                      //           end: Alignment.bottomLeft,
+                      //         ),
+                      //         borderRadius: BorderRadius.circular(16),
+                      //         boxShadow: [
+                      //           BoxShadow(
+                      //             color: primary.withOpacity(0.3),
+                      //             blurRadius: 15,
+                      //             offset: const Offset(0, 8),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //       child: const Icon(Icons.auto_awesome, color: Colors.white, size: 32),
+                      //     ),
+                      //     const SizedBox(height: 12),
+                      //     Text(
+                      //       "Aether",
+                      //       style: TextStyle(
+                      //         fontSize: 24,
+                      //         fontWeight: FontWeight.w900,
+                      //         color: primary,
+                      //         letterSpacing: -0.5,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      // const SizedBox(height: 48),
 
                       // Content Header
                       Text(
