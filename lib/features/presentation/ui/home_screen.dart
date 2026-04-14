@@ -1,4 +1,6 @@
+import 'package:authentication/features/presentation/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('Home / Dashboard'),
         actions: [
           // A quick way to test your new logout logic!
-          /*
+          
           Consumer(
             builder: (context, ref, child) {
               return IconButton(
@@ -35,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
           )
-          */
+          
         ],
       ),
       body: Center(

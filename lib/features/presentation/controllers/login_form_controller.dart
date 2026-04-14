@@ -40,7 +40,7 @@ class LoginFormController extends Notifier<LoginFormState> {
   state = state.copyWith(error: 'Incorrect password. Please try again.');
   
 } catch (e) {
-      // Catch the "Invalid credentials" error from our LocalAuthRepository
+      
       state = state.copyWith(error: 'An unexpected error occurred. Please try again.');
     } finally {
       state = state.copyWith(isSubmitting: false);
