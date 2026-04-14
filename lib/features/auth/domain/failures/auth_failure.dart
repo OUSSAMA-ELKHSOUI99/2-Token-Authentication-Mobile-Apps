@@ -9,3 +9,4 @@ class UserNotFoundException implements Exception {
 class InvalidPasswordException implements Exception {
   final String message = 'The password you entered is incorrect.';
 }
+

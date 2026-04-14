@@ -167,7 +167,7 @@ class RegistrationScreen extends ConsumerWidget {
                       // Full Name
                       _buildLabel("Full Name"),
                       _buildTextField(
-                        hintText: "John Doe",
+                        hintText: "Example",
                         icon: Icons.person_outline,
                         keyboardType: TextInputType.name,
                         onChanged: formController.updateFullName
@@ -177,10 +177,9 @@ class RegistrationScreen extends ConsumerWidget {
                       // Email
                       _buildLabel("Email Address"),
                       _buildTextField(
-                        hintText: "hello@aether.com",
+                        hintText: "email@example.com",
                         icon: Icons.mail_outline,
                         keyboardType: TextInputType.emailAddress,
-                        errorText: formState.emailError,
                         onChanged: formController.updateEmail,
                       ),
                       const SizedBox(height: 24),
@@ -194,7 +193,6 @@ class RegistrationScreen extends ConsumerWidget {
                         onVisibilityToggle: () {
                           ref.read(registrationFormProvider.notifier).togglePasswordVisibility();
                         },
-                        errorText: formState.passwordError,
                         onChanged: formController.updatePassword,
                       ),
                       const SizedBox(height: 24),
@@ -250,48 +248,6 @@ class RegistrationScreen extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 32),
-
-                      // Sign Up Button
-                      Container(
-                        height: 60,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [primary, primaryContainer],
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                          ),
-                          borderRadius: BorderRadius.circular(24),
-                          boxShadow: [
-                            BoxShadow(
-                              color: primary.withOpacity(0.25),
-                              blurRadius: 48,
-                              offset: const Offset(0, 24),
-                              spreadRadius: -12,
-                            ),
-                          ],
-                        ),
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(24),
-                            onTap: () {
-                              formState.isSubmitting ? null : formController.submit;
-                            },
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Sign Up",
-                                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(width: 8),
-                                Icon(Icons.arrow_forward, color: Colors.white, size: 24),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
                       if (formState.error != null) ...[
                       const SizedBox(height: 16),
               Container(
@@ -322,6 +278,49 @@ class RegistrationScreen extends ConsumerWidget {
       ],
     ),
   ),],
+                      const SizedBox(height: 32),
+
+                      // Sign Up Button
+                      Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [primary, primaryContainer],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                          ),
+                          borderRadius: BorderRadius.circular(24),
+                          boxShadow: [
+                            BoxShadow(
+                              color: primary.withOpacity(0.25),
+                              blurRadius: 48,
+                              offset: const Offset(0, 24),
+                              spreadRadius: -12,
+                            ),
+                          ],
+                        ),
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(24),
+                            onTap:
+                              formState.isSubmitting ? null : formController.submit
+                            ,
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Sign Up",
+                                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(width: 8),
+                                Icon(Icons.arrow_forward, color: Colors.white, size: 24),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      
                       const SizedBox(height: 32),
                   
                       // Divider (Tonal Shift)

@@ -50,11 +50,19 @@ class RegistrationFormController extends Notifier<RegistrationFormState> {
       passwordError = 'Must be 8+ chars, with 1 uppercase & 1 number';
     }
 
-    if (emailError != null || passwordError != null) {
+    if (emailError != null ) {
       // Update state with errors and return false
       state = state.copyWith(
-        emailError: emailError, 
-        passwordError: passwordError
+        error: emailError, 
+       
+      );
+      return false;
+    }
+    if ( passwordError != null) {
+      // Update state with errors and return false
+      state = state.copyWith(
+        
+        error: passwordError
       );
       return false;
     }
@@ -62,6 +70,7 @@ class RegistrationFormController extends Notifier<RegistrationFormState> {
   }
 
   Future<void> submit() async {
+    if (!_validate()) return;
     // 1. Basic Validation
     if (state.fullName.isEmpty || state.email.isEmpty || state.password.isEmpty || state.confirmPassword.isEmpty) {
       // You can set specific errors here, or a general one
@@ -70,11 +79,12 @@ class RegistrationFormController extends Notifier<RegistrationFormState> {
     }
 
     if (state.password != state.confirmPassword) {
-      state = state.copyWith(confirmPasswordError: 'Passwords do not match');
+      state = state.copyWith(error: 'Passwords do not match');
       return;
     }
 
     if (!state.agreedToTerms) {
+      state = state.copyWith(error: 'You must agree to the Terms and Conditions.');
       // Handle terms error (maybe show a snackbar in the UI since there's no error text field for the checkbox)
       return;
     }
@@ -87,12 +97,13 @@ class RegistrationFormController extends Notifier<RegistrationFormState> {
       // await ref.read(authControllerProvider.notifier).register(...);
       await ref.read(authControllerProvider.notifier).register(
         state.email, 
-        state.password
+        state.password,
+        state.fullName
       );
       
     } catch (e) {
       // Handle backend errors
-      state = state.copyWith(emailError: 'Registration failed. Please try again.');
+      state = state.copyWith(error: 'Registration failed. Please try again.');
     } finally {
       state = state.copyWith(isSubmitting: false);
     }
