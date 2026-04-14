@@ -13,16 +13,18 @@ class AuthController extends AsyncNotifier<User?> {
   }
 
   Future<void> login(String email, String password) async {
-    state = const AsyncValue.loading();
-    try {
-      final repo = ref.read(authRepositoryProvider);
-      final user = await repo.loginWithEmail(email, password);
-      // Update state to authenticated
-      state = AsyncValue.data(user as User?);
-    } catch (e, stack) {
-      // Handles your custom Domain failures
-      state = AsyncValue.error(e, stack);
-    }
+    // state = const AsyncValue.loading();
+    // try {
+    //   final repo = ref.read(authRepositoryProvider);
+    //   final user = await repo.loginWithEmail(email, password);
+    //   // Update state to authenticated
+    //   state = AsyncValue.data(user as User?);
+    // } catch (e, stack) {
+    //   // Handles your custom Domain failures
+    //   state = AsyncValue.error(e, stack);
+    // }
+    final user = await ref.read(authRepositoryProvider).loginWithEmail(email, password);
+    state = AsyncValue.data(user as User?);
   }
 
   Future<void> register(String email, String password, {String name = 'New User'}) async {

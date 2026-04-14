@@ -62,23 +62,37 @@ class RegistrationFormController extends Notifier<RegistrationFormState> {
   }
 
   Future<void> submit() async {
-    // 1. Run validation before doing anything
-    if (!_validate()) return; 
+    // 1. Basic Validation
+    if (state.fullName.isEmpty || state.email.isEmpty || state.password.isEmpty || state.confirmPassword.isEmpty) {
+      // You can set specific errors here, or a general one
+      state = state.copyWith(error: 'Please fill in all fields');
+      return;
+    }
 
-    // 2. Set loading state
+    if (state.password != state.confirmPassword) {
+      state = state.copyWith(confirmPasswordError: 'Passwords do not match');
+      return;
+    }
+
+    if (!state.agreedToTerms) {
+      // Handle terms error (maybe show a snackbar in the UI since there's no error text field for the checkbox)
+      return;
+    }
+
+    // 2. Proceed with submission
     state = state.copyWith(isSubmitting: true);
 
     try {
-      // 3. Call the main AuthController to actually hit the repository
-      // Notice we use ref.read to access the other controller
+      // Call your AuthController or Repository here
+      // await ref.read(authControllerProvider.notifier).register(...);
       await ref.read(authControllerProvider.notifier).register(
         state.email, 
-        state.password,
+        state.password
       );
-      // If successful, the AuthWrapper UI will automatically route to Home
+      
     } catch (e) {
-      // Handle server/local DB errors (e.g., "Email already exists")
-      state = state.copyWith(emailError: 'Email already exists');
+      // Handle backend errors
+      state = state.copyWith(emailError: 'Registration failed. Please try again.');
     } finally {
       state = state.copyWith(isSubmitting: false);
     }

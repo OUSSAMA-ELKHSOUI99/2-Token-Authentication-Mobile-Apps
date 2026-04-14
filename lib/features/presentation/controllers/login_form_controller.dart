@@ -1,3 +1,4 @@
+import 'package:authentication/features/auth/domain/failures/auth_failure.dart';
 import 'package:authentication/features/presentation/states/login_form_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'auth_controller.dart'; // main auth controller
@@ -23,15 +24,24 @@ class LoginFormController extends Notifier<LoginFormState> {
     state = state.copyWith(isSubmitting: true);
 
     try {
+      state = state.copyWith(isSubmitting: true, clearError: true);
       // Call the main AuthController's login method!
       await ref.read(authControllerProvider.notifier).login(
         state.email, 
         state.password,
       );
       // If successful, AuthWrapper sees the user and routes to HomeScreen automatically
-    } catch (e) {
+    } on UserNotFoundException {
+  // Specifically catch the User Not Found error
+  state = state.copyWith(error: 'We couldn\'t find an account with that email. Please sign up!');
+  
+} on InvalidPasswordException {
+  // Specifically catch the wrong password error
+  state = state.copyWith(error: 'Incorrect password. Please try again.');
+  
+} catch (e) {
       // Catch the "Invalid credentials" error from our LocalAuthRepository
-      state = state.copyWith(error: 'Invalid email or password');
+      state = state.copyWith(error: 'An unexpected error occurred. Please try again.');
     } finally {
       state = state.copyWith(isSubmitting: false);
     }

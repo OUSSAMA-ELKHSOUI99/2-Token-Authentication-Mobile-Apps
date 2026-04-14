@@ -292,8 +292,38 @@ class RegistrationScreen extends ConsumerWidget {
                           ),
                         ),
                       ),
+                      if (formState.error != null) ...[
+                      const SizedBox(height: 16),
+              Container(
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    decoration: BoxDecoration(
+      color: const Color(0xFFF74B6D).withOpacity(0.1), // error-container color from your theme
+      borderRadius: BorderRadius.circular(12),
+      border: Border.all(color: const Color(0xFFF74B6D).withOpacity(0.3)),
+    ),
+    child: Row(
+      children: [
+        const Icon(
+          Icons.error_outline, 
+          color: Color(0xFFB41340), // error color from your theme
+          size: 20,
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Text(
+            formState.error!,
+            style: const TextStyle(
+              color: Color(0xFFB41340),
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ],
+    ),
+  ),],
                       const SizedBox(height: 32),
-
+                  
                       // Divider (Tonal Shift)
                       Row(
                         children: [

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:authentication/features/auth/domain/failures/auth_failure.dart';
 import 'package:crypto/crypto.dart';
 import 'package:authentication/features/auth/domain/entities/token_pair.dart';
 import 'package:authentication/features/auth/domain/entities/user.dart';
@@ -74,7 +75,7 @@ class LocalAuthRepository implements IAuthRepository{
     );
 
     if (maps.isEmpty) {
-      throw Exception('User not found'); // Or your custom UserNotFoundFailure
+      throw UserNotFoundException(); // Or your custom UserNotFoundFailure
     }
 
     final userRecord = maps.first;
@@ -82,7 +83,7 @@ class LocalAuthRepository implements IAuthRepository{
 
     // Compare the stored hash with the input hash
     if (userRecord['password_hash'] != hashedPassword) {
-      throw Exception('Invalid credentials'); 
+      throw InvalidPasswordException();
     }
 
     // --- 2. Generate the tokens as JWTs ---

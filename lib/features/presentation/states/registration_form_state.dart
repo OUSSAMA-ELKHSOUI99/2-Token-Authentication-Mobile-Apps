@@ -11,6 +11,7 @@ class RegistrationFormState {
   final bool isSubmitting;
   final bool isPasswordVisible;
   final bool agreedToTerms;
+  final String? error;
 
   RegistrationFormState({
     this.fullName = '',           // <--- Added
@@ -24,6 +25,7 @@ class RegistrationFormState {
     this.isSubmitting = false,
     this.isPasswordVisible = false,
     this.agreedToTerms = false,
+    this.error
   });
 
   // copyWith allows us to update one field while keeping the rest exactly the same
@@ -41,8 +43,10 @@ class RegistrationFormState {
     bool clearEmailError = false,
     bool clearPasswordError = false,
     bool clearConfirmPasswordError = false,
+    bool clearError = false,
     bool? isPasswordVisible,
     bool? agreedToTerms,
+    String? error
   }) {
     return RegistrationFormState(
       fullName: fullName ?? this.fullName,
@@ -58,6 +62,8 @@ class RegistrationFormState {
       isSubmitting: isSubmitting ?? this.isSubmitting,
       isPasswordVisible: isPasswordVisible ?? this.isPasswordVisible,
       agreedToTerms: agreedToTerms ?? this.agreedToTerms,
+
+      error: clearError ? null : (error ?? this.error)
     );
   }
 }
