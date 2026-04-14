@@ -10,3 +10,6 @@ final Color background = const Color(0xFFFAF4FF);
   final Color surfaceContainerLow = const Color(0xFFF4EEFF);
   final Color surfaceContainerHighest = const Color(0xFFE1D8FF);
   final Color outlineVariant = const Color(0xFFB0A7D6);
+
+  final Color surfaceContainerHigh = const Color(0xFFE6DEFF);
+  

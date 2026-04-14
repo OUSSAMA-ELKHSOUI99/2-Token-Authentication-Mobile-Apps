@@ -243,7 +243,7 @@ class LoginScreen extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 32),
+                      const SizedBox(height: 8),
                       if (formState.error != null) ...[
               const SizedBox(height: 16),
               Text(
@@ -252,6 +252,7 @@ class LoginScreen extends ConsumerWidget {
               ),
             ],
                       // Action Button
+                      const SizedBox(height: 32),
                       Container(
                         height: 56,
                         decoration: BoxDecoration(

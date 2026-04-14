@@ -18,6 +18,22 @@ class RegistrationFormController extends Notifier<RegistrationFormState> {
     state = state.copyWith(password: value, clearPasswordError: true);
   }
 
+  void updateFullName(String value) {
+    state = state.copyWith(fullName: value, clearFullNameError: true);
+  }
+
+  void updateConfirmPassword(String value) {
+    state = state.copyWith(confirmPassword: value, clearConfirmPasswordError: true);
+  }
+
+  void togglePasswordVisibility() {
+    state = state.copyWith(isPasswordVisible: !state.isPasswordVisible);
+  }
+  
+  void toggleAgreedToTerms() {
+    state = state.copyWith(agreedToTerms: !state.agreedToTerms);
+  }
+
   bool _validate() {
     String? emailError;
     String? passwordError;
