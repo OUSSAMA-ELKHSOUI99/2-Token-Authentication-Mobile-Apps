@@ -155,7 +155,7 @@ class RegistrationScreen extends ConsumerWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            "Join the ethereal professional network.",
+                            "Join the Application professional network.",
                             style: TextStyle(fontSize: 16, color: onSurfaceVariant),
                             textAlign: TextAlign.center,
                           ),
@@ -276,7 +276,7 @@ class RegistrationScreen extends ConsumerWidget {
                           child: InkWell(
                             borderRadius: BorderRadius.circular(24),
                             onTap: () {
-                              // Sign Up Logic
+                              formState.isSubmitting ? null : formController.submit;
                             },
                             child: const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -295,16 +295,59 @@ class RegistrationScreen extends ConsumerWidget {
                       const SizedBox(height: 32),
 
                       // Divider (Tonal Shift)
-                      Center(
-                        child: Text(
-                          "SECURE REGISTRATION",
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: onSurfaceVariant.withOpacity(0.4),
-                            letterSpacing: 2.0,
+                      Row(
+                        children: [
+                          Expanded(child: Divider(color: surfaceContainerHighest, thickness: 1)),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Text(
+                              "SECURE REGISTRATION",
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: onSurfaceVariant.withOpacity(0.5),
+                                letterSpacing: 1.5,
+                              ),
+                            ),
                           ),
-                        ),
+                          Expanded(child: Divider(color: surfaceContainerHighest, thickness: 1)),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+
+                      // Social Buttons
+                      Row(
+                        children: [
+                          Expanded(
+                            child: OutlinedButton.icon(
+                              style: OutlinedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(vertical: 16),
+                                backgroundColor: Colors.white,
+                                side: BorderSide(color: outlineVariant.withOpacity(0.3)),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                              ),
+                              onPressed: () {},
+                              // Note: Replaced the image URL with a local icon for standard Flutter implementation. 
+                              // Use Image.network() if you strictly need the URL.
+                              icon: const Icon(Icons.g_mobiledata, color: Colors.black87, size: 24),
+                              label: const Text("Google", style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600)),
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: OutlinedButton.icon(
+                              style: OutlinedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(vertical: 16),
+                                backgroundColor: Colors.white,
+                                side: BorderSide(color: outlineVariant.withOpacity(0.3)),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                              ),
+                              onPressed: () {},
+                              icon: const Icon(Icons.facebook, color: Colors.black87, size: 24),
+                              label: const Text("Facebook", style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600)),
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 32),
 
