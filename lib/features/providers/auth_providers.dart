@@ -22,3 +22,13 @@ final authRepositoryProvider = Provider<IAuthRepository>((ref) {
   final db = ref.watch(localDbProvider);
   return LocalAuthRepository(storage, db);
 });
+
+// final authRepositoryProvider = Provider<IAuthRepository>((ref) {
+//   final secureStorage = ref.watch(secureStorageProvider);
+  
+//   // 1. Watch the dioProvider we created earlier!
+//   final dio = ref.watch(dioProvider); 
+
+//   // 2. Pass it into the repository
+//   return NetworkAuthRepository(secureStorage, dio);
+// });

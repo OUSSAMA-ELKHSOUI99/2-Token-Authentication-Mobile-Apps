@@ -77,49 +77,56 @@ class NetworkAuthRepository implements IAuthRepository {
   // just calling dio.post('$_baseUrl/register') and handling the response!
 
   @override
-  Future<TokenPair> registerWithEmail(String email, String password, String name) async {
-  // 1. Check if the email is already taken
-  final existingUsers = await localDb.query(
-    'users',
-    where: 'email = ?',
-    whereArgs: [email],
-  );
-
-  if (existingUsers.isNotEmpty) {
-    throw Exception('Email already in use'); // This will be caught by the form controller
-  }
-
-  // 2. Hash the password and generate a new ID
-  final hashedPassword = _hashPassword(password);
-  final newUserId = const Uuid().v4(); 
-
-  // 3. Save the new user to the local SQLite database
-  await localDb.insert('users', {
-    'id': newUserId,
-    'email': email,
-    'name': name,
-    'password_hash': hashedPassword,
-  });
-
-  // 4. Automatically log them in by generating the tokens
-  // Since we already built loginWithEmail, we can just call it here!
-  return await loginWithEmail(email, password);
-  }
-
-  @override
-  Future<TokenPair> refreshSession(String oldRefreshToken) async {
-    // In a real app, you send the oldRefreshToken to a /refresh endpoint.
-    // The server verifies it hasn't been revoked, then issues new ones.
+Future<TokenPair> registerWithEmail(String email, String password, String name) async {
+  try {
+    final response = await dio.post('$_baseUrl/register', data: {
+      'email': email,
+      'password': password,
+      'name': name, 
+    });
     
-    // Simulate getting new tokens
-    final newTokens = TokenPair(
-      accessToken: "NEW_ACCESS_TOKEN_JWT",
-      refreshToken: "NEW_REFRESH_TOKEN", 
+    // 1. The Python API returns the tokens directly! Just read them.
+    final tokens = TokenPair(
+      accessToken: response.data['accessToken'],
+      refreshToken: response.data['refreshToken'],
     );
     
+    // 2. Save them securely
+    await _saveTokens(tokens);
+    return tokens;
+
+  } on DioException catch (e) {
+    if (e.response?.statusCode == 400) {
+      throw Exception('Email already in use'); // Handle the specific Python 400 error
+    }
+    throw Exception('Network error');
+  }
+}
+
+@override
+Future<TokenPair> refreshSession(String oldRefreshToken) async {
+  try {
+    final response = await dio.post('$_baseUrl/refresh', data: {
+      'refresh_token': oldRefreshToken, // Name must match Python's Pydantic model exactly!
+    });
+    
+    // 1. Read the REAL new tokens from the Python response
+    final newTokens = TokenPair(
+      accessToken: response.data['accessToken'],
+      refreshToken: response.data['refreshToken'], 
+    );
+  
+    // 2. Save the new ones over the old ones
     await _saveTokens(newTokens);
     return newTokens;
+
+  } on DioException catch (e) {
+    if (e.response?.statusCode == 401) {
+      throw Exception('Session expired entirely. Please log in again.');
+    }
+    throw Exception('Network error');
   }
+}
 
   @override
   Future<void> logout() async {
