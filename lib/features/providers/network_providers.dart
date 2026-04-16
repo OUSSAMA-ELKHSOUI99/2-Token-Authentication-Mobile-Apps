@@ -34,7 +34,34 @@ import 'package:riverpod/src/framework.dart';
 //   return dio;
 // });
 
-final Provider<Dio> dioProvider = Provider<Dio>((ref) {
+// final Provider<Dio> dioProvider = Provider<Dio>((ref) {
+//   final dio = Dio(
+//     BaseOptions(
+//       baseUrl: 'http://127.0.0.1:8000',
+//       connectTimeout: const Duration(seconds: 10),
+//     ),
+//   );
+
+//   dio.interceptors.add(InterceptorsWrapper(
+//     // Note: onRequest is now async!
+//     onRequest: (options, handler) async {
+//       // 1. Read directly from storage, completely bypassing the AuthRepo loop
+//       final secureStorage = ref.read(secureStorageProvider);
+      
+//       // 2. Read your token (make sure the string matches the key you use to save it)
+//       final token = await secureStorage.read(key: 'access_token'); 
+      
+//       if (token != null) {
+//         options.headers['Authorization'] = 'Bearer $token';
+//       }
+//       return handler.next(options);
+//     },
+//   ));
+
+//   return dio;
+// });
+
+final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(
     BaseOptions(
       baseUrl: 'http://127.0.0.1:8000',
@@ -42,21 +69,17 @@ final Provider<Dio> dioProvider = Provider<Dio>((ref) {
     ),
   );
 
-  dio.interceptors.add(InterceptorsWrapper(
-    // Note: onRequest is now async!
-    onRequest: (options, handler) async {
-      // 1. Read directly from storage, completely bypassing the AuthRepo loop
-      final secureStorage = ref.read(secureStorageProvider);
+  // Add our custom class that handles BOTH onRequest and onError!
+  dio.interceptors.add(
+    AuthInterceptor(
       
-      // 2. Read your token (make sure the string matches the key you use to save it)
-      final token = await secureStorage.read(key: 'access_token'); 
       
-      if (token != null) {
-        options.headers['Authorization'] = 'Bearer $token';
-      }
-      return handler.next(options);
-    },
-  ));
+      ref.read(secureStorageProvider),
+      dio,
+       
+      
+    ),
+  );
 
   return dio;
 });
