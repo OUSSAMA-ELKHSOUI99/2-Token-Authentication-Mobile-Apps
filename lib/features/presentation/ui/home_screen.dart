@@ -1,4 +1,5 @@
 import 'package:authentication/features/presentation/controllers/auth_controller.dart';
+import 'package:authentication/features/providers/network_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -49,6 +50,29 @@ class _HomeScreenState extends State<HomeScreen> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            const SizedBox(height: 32,),
+            // test the token pair
+            Consumer(
+            builder: (context, ref, child) {
+              return ElevatedButton(
+  onPressed: () async {
+    try {
+      // 1. Grab your Dio instance (which has the Interceptor attached!)
+      final dio = ref.read(dioProvider); 
+      
+      // 2. Try to hit the protected route
+      print('--- ATTEMPTING TO FETCH SECRET DATA ---');
+      final response = await dio.get('http://127.0.0.1:8000/secret-dashboard');
+      
+      // 3. If it works, print the secret message!
+      print('SUCCESS: ${response.data}');
+      
+    } catch (e) {
+      print('FAILED: $e');
+    }
+  },
+  child: const Text('Test Protected Route'),
+);})
           ],
         ),
       ),

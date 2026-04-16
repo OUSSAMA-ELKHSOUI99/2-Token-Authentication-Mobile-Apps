@@ -1,13 +1,16 @@
 import 'package:authentication/features/auth/domain/repositories/i_auth_repository.dart';
+import 'package:authentication/features/providers/auth_providers.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthInterceptor extends Interceptor{
   final Dio dio;
-  final IAuthRepository authRepository;
+  // final IAuthRepository authRepository;
+  final Ref ref;
   final FlutterSecureStorage secureStorage;
 
-  AuthInterceptor(this.dio, this.authRepository, this.secureStorage);
+  AuthInterceptor(this.dio, this.ref, this.secureStorage);
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
@@ -29,6 +32,7 @@ class AuthInterceptor extends Interceptor{
       if (refreshToken != null) {
         try {
           // 1. Call your repository to get new tokens
+          final authRepository = ref.read(authRepositoryProvider);
           final newTokens = await authRepository.refreshSession(refreshToken);
           
           // 2. Retry the original request with the NEW access token
@@ -42,6 +46,7 @@ class AuthInterceptor extends Interceptor{
           
         } catch (e) {
           // If the refresh token is ALSO expired or invalid, log the user out entirely
+          final authRepository = ref.read(authRepositoryProvider);
           await authRepository.logout();
           // You would also trigger your Riverpod AuthController to push the user to the Login screen here
         }
