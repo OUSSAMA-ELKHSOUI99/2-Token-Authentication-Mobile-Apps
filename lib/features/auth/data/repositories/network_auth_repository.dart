@@ -17,7 +17,7 @@ class NetworkAuthRepository implements IAuthRepository {
   NetworkAuthRepository(this.secureStorage, this.dio);
 
   // If using Android Emulator, point to 10.0.2.2. If iOS simulator, 127.0.0.1.
-  static const String _baseUrl = 'http://10.0.2.2:8000'; 
+  static const String _baseUrl = 'http://127.0.0.1:8000'; 
 
   static const String _accessTokenKey = 'access_token';
   static const String _refreshTokenKey = 'refresh_token';
@@ -66,6 +66,7 @@ class NetworkAuthRepository implements IAuthRepository {
       return tokens;
 
     } on DioException catch (e) {
+      print(e);
       if (e.response?.statusCode == 401) {
         throw Exception('Invalid email or password');
       }

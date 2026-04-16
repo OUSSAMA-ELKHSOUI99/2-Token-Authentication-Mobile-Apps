@@ -103,6 +103,7 @@ class RegistrationFormController extends Notifier<RegistrationFormState> {
       
     } catch (e) {
       // Handle backend errors
+      print(e);
       state = state.copyWith(error: 'Registration failed. Please try again.');
     } finally {
       state = state.copyWith(isSubmitting: false);
