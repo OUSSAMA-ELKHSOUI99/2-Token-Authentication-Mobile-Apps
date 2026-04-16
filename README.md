@@ -2,10 +2,10 @@
 these are the architectural patterns that make the app scaleable and secure:
 
 ## Feature-First Clean Architecture: 
-Separating your code by feature (e.g., auth, profile) rather than strictly by layer. Inside each feature, you separate the Domain (rules/entities), Data (network/storage), and Presentation (UI/State).
+Separating the code by feature (ex: auth, profile) rather than strictly by layer. Inside each feature, we separate the Domain (rules/entities), Data (network/storage), and Presentation (UI/State).
 
 ## Dependency Injection (DI): 
-The practice of passing tools (like a Database or API client) into your classes rather than creating them inside the class. We used Riverpod to handle this completely.
+The practice of passing tools (like a Database or API client) into the classes rather than creating them inside the class. We used Riverpod to handle this completely.
 
 ## The Token Pair (OAuth 2.0 Pattern):
 
@@ -26,13 +26,20 @@ The solution to the circular dependency. A bare-bones, secondary HTTP client use
 The exact stack that make this architecture work.
 
 Environment,Package,Purpose
-Flutter (Core),flutter_riverpod,State management and Dependency Injection (DI).
-Flutter (Network),dio,"Advanced HTTP client. Handles requests, headers, and interceptors."
-Flutter (Storage),flutter_secure_storage,Encrypts and safely stores the Access and Refresh tokens on the device.
-Flutter (Auth),dart_jsonwebtoken,"Used strictly to decode the JWT payload locally to extract user data (ID, email) without making an API call."
-Python (Server),fastapi & uvicorn,The high-performance web framework and server hosting your API.
-Python (DB),psycopg2-binary,The driver that allows Python to talk to your PostgreSQL database.
-Python (Auth),bcrypt & pyjwt,bcrypt securely hashes/salts passwords. pyjwt generates the Access and Refresh tokens.
+#### Flutter (Core) - Package: flutter_riverpod: 
+Purpose: State management and Dependency Injection (DI).
+#### Flutter (Network) - Package: dio
+Purpose : "Advanced HTTP client. Handles requests, headers, and interceptors."
+#### Flutter (Storage) - Package: flutter_secure_storage
+Purpose : Encrypts and safely stores the Access and Refresh tokens on the device.
+#### Flutter (Auth) - Package: dart_jsonwebtoken
+Purpose : "Used strictly to decode the JWT payload locally to extract user data (ID, email) without making an API call."
+#### Python (Server) - Package: fastapi & uvicorn
+Purpose: The high-performance web framework and server hosting the API.
+#### Python (DB) - Package: psycopg2-binary
+Purpose: The driver that allows Python to talk to the PostgreSQL database.
+#### Python (Auth) - Package: bcrypt & pyjwt
+Purpose: bcrypt securely hashes/salts passwords. pyjwt generates the Access and Refresh tokens.
 
 # 3. Step-by-Step Implementation Summary
 the chronological order of how the architecture comes together.
@@ -70,10 +77,12 @@ Auth Controller: Created the main AuthController that listens to the form contro
 The Wrapper (AuthWrapper): A root widget sitting in main.dart that watches the AuthController. If the user has a valid token, it immediately draws the HomeScreen. If not, it draws the AuthSwitchScreen (Login/Register).
 
 ## Step 5: Connecting the Two Worlds (ADB Reverse)
-Because Android Emulators and physical phones have different network rules than your PC, we had to bridge the gap.
+Because Android Emulators and physical phones have different network rules than the PC, we had to bridge the gap.
 
-Cleartext: Added android:usesCleartextTraffic="true" to the Android Manifest to allow local http:// testing.
+#### Cleartext: 
+Added android:usesCleartextTraffic="true" to the Android Manifest to allow local http:// testing.
 
+####
 The Tunnel: Used the adb reverse tcp:8000 tcp:8000 command via a USB cable. This securely mapped the phone's port 8000 directly to the PC's localhost, allowing Flutter to hit http://127.0.0.1:8000 just as if it were the computer itself.
 
 <!-- // TODO: in AndroidManifest.xml, delete this android:usesCleartextTraffic="true" before deploying -->
